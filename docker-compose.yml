@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  trainmodel:
+    build:
+      context: ./trainmodel
+    container_name: trainmodel
+    volumes:
+      - model_data:/model_data
+
+  hostmodel:
+    build:
+      context: ./hostmodel
+    container_name: hostmodel
+    ports:
+      - "5000:5000"
+    depends_on:
+      - trainmodel
+    volumes:
+      - model_data:/model_data
+
+volumes:
+  model_data:
